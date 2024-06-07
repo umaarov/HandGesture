@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="uz.umarov.handgesture.model.enums.GestureCategory" />
+
+        <import type="android.view.View" />
+
+        <import type="uz.umarov.handgesture.R" />
+
+        <import type="androidx.camera.core.AspectRatio" />
+
+        <variable
+            name="captureActivity"
+            type="uz.umarov.handgesture.ui.screen.capture.CaptureActivity" />
+
+
+        <variable
+            name="gestureDetectViewModel"
+            type="uz.umarov.handgesture.view_model.capture.GestureDetectViewModel" />
+
+        <variable
+            name="cameraModeViewModel"
+            type="uz.umarov.handgesture.view_model.capture.CameraModeViewModel" />
+
+        <variable
+            name="cameraFragment"
+            type="uz.umarov.handgesture.ui.screen.capture.view.CameraFragment" />
+
+        <variable
+            name="screenRotation"
+            type="uz.umarov.handgesture.helper.OrientationLiveData" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/capture_screen_root_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black">
+
+        <FrameLayout
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <include
+            android:id="@+id/no_camera_available_warning"
+            layout="@layout/no_camera_available_warning"
+            android:visibility="@{cameraModeViewModel.availableCameraOrientations.size() > 0 ? View.GONE : View.VISIBLE}"
+            app:screenRotationValue="@{-screenRotation.intValue()}" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:background="@color/blue"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <TextView
+                android:id="@+id/gestureResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
